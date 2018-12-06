@@ -46,8 +46,12 @@ if [ ! -z "$RELAYHOST" ]; then
 		echo "$RELAYHOST $RELAYHOST_USERNAME:$RELAYHOST_PASSWORD" >> /etc/postfix/sasl_passwd
 		postmap hash:/etc/postfix/sasl_passwd
 		postconf -e "smtp_sasl_auth_enable=yes"
+		postconf -e "smtp_tls_security_level = encrypt"
+		postconf -e "header_size_limit = 4096000"
 		postconf -e "smtp_sasl_password_maps=hash:/etc/postfix/sasl_passwd"
 		postconf -e "smtp_sasl_security_options=noanonymous"
+		postconf -e "smtp_sasl_tls_security_options = noanonymous"
+		
 	else
 		echo " without any authentication. Make sure your server is configured to accept emails coming from this IP."
 	fi
