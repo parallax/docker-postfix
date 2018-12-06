@@ -1,0 +1,55 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+ name: '{SITENAME}-{BRANCH}-{ENVIRONMENT}'
+spec:
+  replicas: 2
+  revisionHistoryLimit: 1
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: '{SITENAME}-{BRANCH}-{ENVIRONMENT}'
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - '{SITENAME}-{BRANCH}-{ENVIRONMENT}'
+            topologyKey: "kubernetes.io/hostname"
+      containers:
+        - name: postfix
+          image: 
+          ports:
+            - name: smtp
+              containerPort: 25
+          resources:
+            requests:
+              memory: 192Mi
+              cpu: 100m
+            limits:
+              memory: 512Mi
+              cpu: 1000m
+          livenessProbe:
+            tcpSocket:
+              port: 25
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          readinessProbe:
+            tcpSocket:
+              port: 25
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          env:
+            - name: ENVIRONMENT
+              value: "{ENVIRONMENT}"
+      terminationGracePeriodSeconds: 20
