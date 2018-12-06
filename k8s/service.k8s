@@ -14,3 +14,4 @@ spec:
   selector:
     app: '{SITENAME}-{BRANCH}-{ENVIRONMENT}'
   sessionAffinity: None
+  type: ClusterIP
