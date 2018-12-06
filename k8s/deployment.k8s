@@ -34,8 +34,8 @@ spec:
               containerPort: 25
           resources:
             requests:
-              memory: 192Mi
-              cpu: 100m
+              memory: 32Mi
+              cpu: 10m
             limits:
               memory: 512Mi
               cpu: 1000m
@@ -43,7 +43,7 @@ spec:
             tcpSocket:
               port: 25
             initialDelaySeconds: 15
-            periodSeconds: 20
+            periodSeconds: 60
           readinessProbe:
             tcpSocket:
               port: 25
