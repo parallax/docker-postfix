@@ -21,7 +21,6 @@ kind: Service
 metadata:
   labels:
     app: '{SITENAME}-{BRANCH}-{ENVIRONMENT}'
-    primary: 'true'
   name: 'smtp-alt'
 spec:
   ports:
