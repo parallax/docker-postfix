@@ -15,3 +15,21 @@ spec:
     app: '{SITENAME}-{BRANCH}-{ENVIRONMENT}'
   sessionAffinity: None
   type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: '{SITENAME}-{BRANCH}-{ENVIRONMENT}'
+    primary: 'true'
+  name: 'smtp-alt'
+spec:
+  ports:
+  - name: smtp
+    port: 2525
+    protocol: TCP
+    targetPort: 25
+  selector:
+    app: '{SITENAME}-{BRANCH}-{ENVIRONMENT}'
+  sessionAffinity: None
+  type: ClusterIP
