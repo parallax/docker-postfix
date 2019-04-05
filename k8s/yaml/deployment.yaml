@@ -54,12 +54,12 @@ spec:
         imagePullPolicy: IfNotPresent
         livenessProbe:
           tcpSocket:
-            port: 1025
+            port: 25
           initialDelaySeconds: 15
           periodSeconds: 60
         readinessProbe:
           tcpSocket:
-            port: 1025
+            port: 25
           initialDelaySeconds: 15
           periodSeconds: 20
         ports:
